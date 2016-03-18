@@ -15,6 +15,7 @@ type RxRect struct {
 	subscribers []chan<- Rect
 }
 
+// NewRxRect creates a new reactive object for the initial value of Rect
 func NewRxRect(v Rect) *RxRect {
 	return &RxRect{
 		value:   v,

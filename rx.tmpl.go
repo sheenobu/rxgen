@@ -19,6 +19,7 @@ type {{.Name}} struct {
 	subscribers []chan<- {{.Type}}
 }
 
+// New{{.Name}} creates a new reactive object for the initial value of {{.Type}}
 func New{{.Name}}(v {{.Type}}) *{{.Name}}{
 	return &{{.Name}}{
 		value: v,

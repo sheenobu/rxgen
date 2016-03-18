@@ -15,6 +15,7 @@ type RxString struct {
 	subscribers []chan<- string
 }
 
+// NewRxString creates a new reactive object for the initial value of string
 func NewRxString(v string) *RxString {
 	return &RxString{
 		value:   v,

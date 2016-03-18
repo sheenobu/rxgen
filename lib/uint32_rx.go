@@ -15,6 +15,7 @@ type RxUint32 struct {
 	subscribers []chan<- uint32
 }
 
+// NewRxUint32 creates a new reactive object for the initial value of uint32
 func NewRxUint32(v uint32) *RxUint32 {
 	return &RxUint32{
 		value:   v,

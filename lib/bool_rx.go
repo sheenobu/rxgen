@@ -15,6 +15,7 @@ type RxBool struct {
 	subscribers []chan<- bool
 }
 
+// NewRxBool creates a new reactive object for the initial value of bool
 func NewRxBool(v bool) *RxBool {
 	return &RxBool{
 		value:   v,

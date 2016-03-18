@@ -15,6 +15,7 @@ type RxInt64 struct {
 	subscribers []chan<- int64
 }
 
+// NewRxInt64 creates a new reactive object for the initial value of int64
 func NewRxInt64(v int64) *RxInt64 {
 	return &RxInt64{
 		value:   v,

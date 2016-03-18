@@ -15,6 +15,7 @@ type RxInt32 struct {
 	subscribers []chan<- int32
 }
 
+// NewRxInt32 creates a new reactive object for the initial value of int32
 func NewRxInt32(v int32) *RxInt32 {
 	return &RxInt32{
 		value:   v,
