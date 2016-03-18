@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/sheenobu/rxgen/lib"
+	"github.com/sheenobu/rxgen/_example/lib"
 )
 
 func main() {
