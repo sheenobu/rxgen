@@ -22,9 +22,9 @@ import (
 )
 
 var (
-	objectType = flag.String("type", "", "type of data to store in the context")
+	objectType = flag.String("type", "", "type to wrap in a reactive struct, required")
+	name       = flag.String("name", "", "name of reactive type, required")
 	output     = flag.String("output", "", "output file name; default srcdir/<type>_rx.go")
-	name       = flag.String("name", "", "name of type; default Rx<type>")
 )
 
 func main() {
