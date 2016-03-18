@@ -16,6 +16,7 @@ package lib
 
 //go:generate rxgen -name RxRect -type Rect .
 
+// Rect represents a struct type that can be marked reactive.
 type Rect struct {
 	X int
 	Y int
