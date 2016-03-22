@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 
-	"github.com/sheenobu/rxgen/_example/lib"
+	"github.com/sheenobu/rxgen/rx"
 )
 
 func main() {
 
-	b := lib.NewRxBool(true)
+	b := rx.NewRxBool(true)
 
 	sub := b.Subscribe()
 
