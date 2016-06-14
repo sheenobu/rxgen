@@ -47,21 +47,6 @@ func (rx *{{.Name}}) Set(v {{.Type}}) {
 	}
 }
 
-// Then decorates a reactive type and return the new decorated version
-func (rx *{{.Name}}) Then(then func({{.Type}}) {{.Type}}) *{{.Name}} {
-   newRx := New{{.Name}}(then(rx.Get()))
-
-   s := rx.Subscribe()
-
-   go func() {
-	  for v := range s.C {
-        newRx.Set(then(v))
-      }
-   }()
-
-    return newRx
-}
-
 // Subscribe subscribes to changes on the {{.Type}}
 func (rx *{{.Name}}) Subscribe() *{{.Name}}Subscriber {
 
