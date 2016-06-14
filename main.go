@@ -75,6 +75,7 @@ func isDirectory(name string) bool {
 	return info.IsDir()
 }
 
+// Generator generates the files
 type Generator struct {
 	buf bytes.Buffer
 	pkg *Package
@@ -83,11 +84,13 @@ type Generator struct {
 	Results *ast.FieldList
 }
 
+// File represents a golang file being processed
 type File struct {
 	pkg  *Package
 	file *ast.File
 }
 
+// Package represents a golang package being processed
 type Package struct {
 	dir      string
 	name     string
