@@ -7,7 +7,9 @@ package {{.Package}}
 
 import (
 		{{.AdditionalImports}}
-        "sync"
+
+		"time"
+		"sync"
 )
 
 // {{.Name}} is the reactive wrapper for {{.Type}}
@@ -23,7 +25,7 @@ type {{.Name}} struct {
 func New{{.Name}}(v {{.Type}}) *{{.Name}}{
 	return &{{.Name}}{
 		value: v,
-		handles: make(chan int, 1),
+		handles: make(chan int, 10),
 	}
 }
 
@@ -88,7 +90,10 @@ func (s *{{.Name}}Subscriber) Close() {
 	s.parent.lock.Unlock()
 
 	go func() {
-		s.parent.handles <- s.handle
+		select {
+		case s.parent.handles <- s.handle:
+		case <-time.After(1 * time.Millisecond):
+		}
 	}()
 }
 `
