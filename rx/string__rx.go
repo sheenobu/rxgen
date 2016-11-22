@@ -32,7 +32,7 @@ func (rx *String) Get() string {
 	return rx.value
 }
 
-// Set sets the String and notifies subscribers
+// Set sets the string and notifies subscribers
 func (rx *String) Set(v string) {
 	rx.lock.Lock()
 	defer rx.lock.Unlock()
@@ -44,7 +44,7 @@ func (rx *String) Set(v string) {
 	}
 }
 
-// Subscribe subscribes to changes on the String
+// Subscribe subscribes to changes on the string
 func (rx *String) Subscribe() *StringSubscriber {
 	c := make(chan string)
 	s := &StringSubscriber{
@@ -86,6 +86,8 @@ func (s *StringSubscriber) Close() {
 	}()
 }
 
+// Bind applies all changes to the 'other' String to this name and returns a CancelFunc for
+// closure
 func (s *String) Bind(ctx context.Context, other *String) context.CancelFunc {
 	ctx, cancel := context.WithCancel(ctx)
 	go func(ctx context.Context) {

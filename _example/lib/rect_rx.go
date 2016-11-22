@@ -64,7 +64,7 @@ func (rx *RxRect) Subscribe() *RxRectSubscriber {
 	return s
 }
 
-// RxRectSubscriber allows subscribing to the reactive lib.Rect
+// RxRectSubscriber allows subscribing to the reactive Rect
 type RxRectSubscriber struct {
 	C      <-chan Rect
 	handle int
@@ -86,6 +86,8 @@ func (s *RxRectSubscriber) Close() {
 	}()
 }
 
+// Bind applies all changes to the 'other' RxRect to this name and returns a CancelFunc for
+// closure
 func (s *RxRect) Bind(ctx context.Context, other *RxRect) context.CancelFunc {
 	ctx, cancel := context.WithCancel(ctx)
 	go func(ctx context.Context) {

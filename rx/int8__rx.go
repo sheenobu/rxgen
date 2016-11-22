@@ -32,7 +32,7 @@ func (rx *Int8) Get() int8 {
 	return rx.value
 }
 
-// Set sets the Int8 and notifies subscribers
+// Set sets the int8 and notifies subscribers
 func (rx *Int8) Set(v int8) {
 	rx.lock.Lock()
 	defer rx.lock.Unlock()
@@ -44,7 +44,7 @@ func (rx *Int8) Set(v int8) {
 	}
 }
 
-// Subscribe subscribes to changes on the Int8
+// Subscribe subscribes to changes on the int8
 func (rx *Int8) Subscribe() *Int8Subscriber {
 	c := make(chan int8)
 	s := &Int8Subscriber{
@@ -86,6 +86,8 @@ func (s *Int8Subscriber) Close() {
 	}()
 }
 
+// Bind applies all changes to the 'other' Int8 to this name and returns a CancelFunc for
+// closure
 func (s *Int8) Bind(ctx context.Context, other *Int8) context.CancelFunc {
 	ctx, cancel := context.WithCancel(ctx)
 	go func(ctx context.Context) {

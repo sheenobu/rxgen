@@ -32,7 +32,7 @@ func (rx *Bool) Get() bool {
 	return rx.value
 }
 
-// Set sets the Bool and notifies subscribers
+// Set sets the bool and notifies subscribers
 func (rx *Bool) Set(v bool) {
 	rx.lock.Lock()
 	defer rx.lock.Unlock()
@@ -44,7 +44,7 @@ func (rx *Bool) Set(v bool) {
 	}
 }
 
-// Subscribe subscribes to changes on the Bool
+// Subscribe subscribes to changes on the bool
 func (rx *Bool) Subscribe() *BoolSubscriber {
 	c := make(chan bool)
 	s := &BoolSubscriber{
@@ -86,6 +86,8 @@ func (s *BoolSubscriber) Close() {
 	}()
 }
 
+// Bind applies all changes to the 'other' Bool to this name and returns a CancelFunc for
+// closure
 func (s *Bool) Bind(ctx context.Context, other *Bool) context.CancelFunc {
 	ctx, cancel := context.WithCancel(ctx)
 	go func(ctx context.Context) {

@@ -32,7 +32,7 @@ func (rx *Uint16) Get() uint8 {
 	return rx.value
 }
 
-// Set sets the Uint16 and notifies subscribers
+// Set sets the uint8 and notifies subscribers
 func (rx *Uint16) Set(v uint8) {
 	rx.lock.Lock()
 	defer rx.lock.Unlock()
@@ -44,7 +44,7 @@ func (rx *Uint16) Set(v uint8) {
 	}
 }
 
-// Subscribe subscribes to changes on the Uint16
+// Subscribe subscribes to changes on the uint8
 func (rx *Uint16) Subscribe() *Uint16Subscriber {
 	c := make(chan uint8)
 	s := &Uint16Subscriber{
@@ -86,6 +86,8 @@ func (s *Uint16Subscriber) Close() {
 	}()
 }
 
+// Bind applies all changes to the 'other' Uint16 to this name and returns a CancelFunc for
+// closure
 func (s *Uint16) Bind(ctx context.Context, other *Uint16) context.CancelFunc {
 	ctx, cancel := context.WithCancel(ctx)
 	go func(ctx context.Context) {

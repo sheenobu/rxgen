@@ -32,7 +32,7 @@ func (rx *Uint64) Get() uint64 {
 	return rx.value
 }
 
-// Set sets the Uint64 and notifies subscribers
+// Set sets the uint64 and notifies subscribers
 func (rx *Uint64) Set(v uint64) {
 	rx.lock.Lock()
 	defer rx.lock.Unlock()
@@ -44,7 +44,7 @@ func (rx *Uint64) Set(v uint64) {
 	}
 }
 
-// Subscribe subscribes to changes on the Uint64
+// Subscribe subscribes to changes on the uint64
 func (rx *Uint64) Subscribe() *Uint64Subscriber {
 	c := make(chan uint64)
 	s := &Uint64Subscriber{
@@ -86,6 +86,8 @@ func (s *Uint64Subscriber) Close() {
 	}()
 }
 
+// Bind applies all changes to the 'other' Uint64 to this name and returns a CancelFunc for
+// closure
 func (s *Uint64) Bind(ctx context.Context, other *Uint64) context.CancelFunc {
 	ctx, cancel := context.WithCancel(ctx)
 	go func(ctx context.Context) {

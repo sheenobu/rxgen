@@ -32,7 +32,7 @@ func (rx *{{.Name}}) Get() {{.Type}} {
 	return rx.value
 }
 
-// Set sets the {{.Name}} and notifies subscribers
+// Set sets the {{.Type}} and notifies subscribers
 func (rx *{{.Name}}) Set(v {{.Type}}) {
 	rx.lock.Lock()
 	defer rx.lock.Unlock()
@@ -44,7 +44,7 @@ func (rx *{{.Name}}) Set(v {{.Type}}) {
 	}
 }
 
-// Subscribe subscribes to changes on the {{.Name}}
+// Subscribe subscribes to changes on the {{.Type}}
 func (rx *{{.Name}}) Subscribe() *{{.Name}}Subscriber {
 	c := make(chan {{.Type}})
 	s := &{{.Name}}Subscriber{
@@ -86,6 +86,8 @@ func (s *{{.Name}}Subscriber) Close() {
 	}()
 }
 
+// Bind applies all changes to the 'other' {{.Name}} to this name and returns a CancelFunc for
+// closure
 func (s *{{.Name}}) Bind(ctx context.Context, other *{{.Name}}) context.CancelFunc {
 	ctx, cancel := context.WithCancel(ctx)
 	go func(ctx context.Context) {
