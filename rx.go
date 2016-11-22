@@ -1,34 +1,75 @@
-package main
+// Package rx is the reactive typewriter
+package rx
 
 import (
-	"os"
+	"io"
 	"strings"
 
-	"text/template"
+	"github.com/clipperhouse/typewriter"
 )
 
-type rxData struct {
-	Invocation        string
-	AdditionalImports string
-
-	Package string
-	Type    string
-	Name    string
-}
-
-func (g *Generator) generateRx(name string, objectType string) {
-
-	data := rxData{
-		Invocation: strings.Join(os.Args[1:], " "),
-		Package:    g.pkg.name,
-		Type:       objectType,
-		Name:       name,
-	}
-
-	t := template.Must(template.New("rx").Parse(rxtemplate))
-
-	err := t.Execute(&g.buf, data)
+func init() {
+	err := typewriter.Register(&Typewriter{})
 	if err != nil {
 		panic(err)
 	}
+}
+
+// Typewriter is the typewriter for reactive types
+type Typewriter struct {
+}
+
+// Name returns the name of the typewriter
+func (rx *Typewriter) Name() string {
+	return "rx"
+}
+
+// Imports returns the required imports for the generated file
+func (rx *Typewriter) Imports(t typewriter.Type) (result []typewriter.ImportSpec) {
+	result = append(result, typewriter.ImportSpec{Name: "sync", Path: "sync"})
+	return
+}
+
+// Data is the template data
+type Data struct {
+	Name string
+	Type string
+}
+
+// Write writes the file contents
+func (rx *Typewriter) Write(w io.Writer, t typewriter.Type) error {
+	tag, found := t.FindTag(rx)
+
+	if !found {
+		// nothing to be done
+		return nil
+	}
+
+	typeName := t.Name
+	prefix := "Rx"
+
+	for _, val := range tag.Values {
+		if val.Name == "Builtin" {
+			prefix = ""
+			typeName = val.TypeParameters[0].Name
+			t.Name = strings.Trim(t.Name, "_")
+		}
+	}
+
+	data := Data{
+		Name: prefix + t.Name,
+		Type: typeName,
+	}
+
+	tmpl, err := templates.ByTag(t, tag)
+
+	if err != nil {
+		return err
+	}
+
+	if err := tmpl.Execute(w, data); err != nil {
+		return err
+	}
+
+	return nil
 }

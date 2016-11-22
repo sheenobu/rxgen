@@ -1,20 +1,36 @@
+// +build ignore
+
 // Package rx contains core types wrapped as reactive structures
 package rx
 
 // generate some core types
 
-//go:generate rxgen -name Uint8 -type uint8 rx.go
-//go:generate rxgen -name Int8 -type int8 rx.go
+// +gen rx:"Builtin[uint8]"
+type Uint8_ uint8
 
-//go:generate rxgen -name Uint16 -type uint16 rx.go
-//go:generate rxgen -name Int16 -type int16 rx.go
+// +gen rx:"Builtin[int8]"
+type Int8_ int8
 
-//go:generate rxgen -name Uint32 -type uint32 rx.go
-//go:generate rxgen -name Int32 -type int32 rx.go
+// +gen rx:"Builtin[uint8]"
+type Uint16_ uint16
 
-//go:generate rxgen -name Uint64 -type uint64 rx.go
-//go:generate rxgen -name Int64 -type int64 rx.go
+// +gen rx:"Builtin[int16]"
+type Int16_ int16
 
-//go:generate rxgen -name Bool -type bool rx.go
+// +gen rx:"Builtin[uint16]"
+type Uint32_ uint32
 
-//go:generate rxgen -name String -type string rx.go
+// +gen rx:"Builtin[int32]"
+type Int32_ int32
+
+// +gen rx:"Builtin[uint64]"
+type Uint64_ uint64
+
+// +gen rx:"Builtin[int64]"
+type Int64_ int64
+
+// +gen rx:"Builtin[bool]"
+type Bool_ bool
+
+// +gen rx:"Builtin[string]"
+type String_ string

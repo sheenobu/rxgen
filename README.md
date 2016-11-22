@@ -1,41 +1,63 @@
 # rxgen
 
-golang library for generating reactive code
+rxgen is a gen typewriter for generating reactive code
 
 ## installation
 
-    go install github.com/sheenobu/rxgen
+    gen add github.com/sheenobu/rxgen
 
-## example
+## Simple Usage
 
-lib/lib.go:
+Outputs type `RxRect`:
 
-    package lib
+```go
+// +gen rx
+type Rect struct {
+	X int
+	Y int
+	W int
+	H int
+}
+```
 
-    //go:generate rxgen -type uint -name RxUint .
+## Builtin types
 
-main.go:
+you can annotate builtin types with a type alias and an underscore:
 
-    import (
-       "lib"
-    )
+```go
+// +gen rx:"Builtin[uint]
+type Uint_ uint
+```
 
-    r := lib.NewRxUint(1)
+`Uint_` will be ignored and the output name will be `Uint` and wrap `uint`. Additionally,
+you can use build tags to exclude `Uint_` from being included.
 
-    // Get the value
-    v := r.Get() // 1
 
-    // Create a new subscription
-    c := r.Subscribe()
+## Usage
 
-    go func() {
-        r.Set(1234)  // blocks, triggers loop below
-        r.Set(4321)  // blocks, triggers loop below
+```go
 
-        c.Close() // closes subscription, quits loop below
-    }()
+import (
+   "lib"
+)
 
-    for val := range c.C {
-        fmt.Printf("Integer changed value: %d\n", val)
-    }
+r := NewUint(1)
+r2 := NewRxRect(Rect{X: 0, Y: 0, W: 0, H: 0})
 
+// Get the value
+v := r.Get() // 1
+
+// Create a new subscription
+c := r.Subscribe()
+
+go func() {
+	r.Set(1234)  // blocks, triggers loop below
+	r.Set(4321)  // blocks, triggers loop below
+
+	c.Close() // closes subscription, quits loop below
+}()
+
+for val := range c.C {
+	fmt.Printf("Integer changed value: %d\n", val)
+}
+```
