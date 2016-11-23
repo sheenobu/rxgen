@@ -9,31 +9,31 @@ import (
 	sync "sync"
 )
 
-// Uint16 is the reactive wrapper for uint8
+// Uint16 is the reactive wrapper for uint16
 type Uint16 struct {
-	value       uint8
+	value       uint16
 	lock        sync.RWMutex
 	handles     chan int
-	subscribers []chan<- uint8
+	subscribers []chan<- uint16
 }
 
-// NewUint16 creates a new reactive object for the initial value of uint8
-func NewUint16(v uint8) *Uint16 {
+// NewUint16 creates a new reactive object for the initial value of uint16
+func NewUint16(v uint16) *Uint16 {
 	return &Uint16{
 		value:   v,
 		handles: make(chan int, 10),
 	}
 }
 
-// Get gets the uint8
-func (rx *Uint16) Get() uint8 {
+// Get gets the uint16
+func (rx *Uint16) Get() uint16 {
 	rx.lock.RLock()
 	defer rx.lock.RUnlock()
 	return rx.value
 }
 
-// Set sets the uint8 and notifies subscribers
-func (rx *Uint16) Set(v uint8) {
+// Set sets the uint16 and notifies subscribers
+func (rx *Uint16) Set(v uint16) {
 	rx.lock.Lock()
 	defer rx.lock.Unlock()
 	rx.value = v
@@ -44,9 +44,9 @@ func (rx *Uint16) Set(v uint8) {
 	}
 }
 
-// Subscribe subscribes to changes on the uint8
+// Subscribe subscribes to changes on the uint16
 func (rx *Uint16) Subscribe() *Uint16Subscriber {
-	c := make(chan uint8)
+	c := make(chan uint16)
 	s := &Uint16Subscriber{
 		C:      c,
 		parent: rx,
@@ -64,9 +64,9 @@ func (rx *Uint16) Subscribe() *Uint16Subscriber {
 	return s
 }
 
-// Uint16Subscriber allows subscribing to the reactive uint8
+// Uint16Subscriber allows subscribing to the reactive uint16
 type Uint16Subscriber struct {
-	C      <-chan uint8
+	C      <-chan uint16
 	handle int
 	parent *Uint16
 }

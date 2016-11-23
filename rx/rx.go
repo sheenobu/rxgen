@@ -11,13 +11,13 @@ type Uint8_ uint8
 // +gen rx:"Builtin[int8]"
 type Int8_ int8
 
-// +gen rx:"Builtin[uint8]"
+// +gen rx:"Builtin[uint16]"
 type Uint16_ uint16
 
 // +gen rx:"Builtin[int16]"
 type Int16_ int16
 
-// +gen rx:"Builtin[uint16]"
+// +gen rx:"Builtin[uint32]"
 type Uint32_ uint32
 
 // +gen rx:"Builtin[int32]"
