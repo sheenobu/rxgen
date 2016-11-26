@@ -25,7 +25,7 @@ type Rect struct {
 you can annotate builtin types with a type alias and an underscore:
 
 ```go
-// +gen rx:"Builtin[uint]
+// +gen rx:"Builtin[uint]"
 type Uint_ uint
 ```
 
