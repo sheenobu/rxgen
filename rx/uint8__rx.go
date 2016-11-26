@@ -90,8 +90,8 @@ func (s *Uint8Subscriber) Close() {
 // closure
 func (s *Uint8) Bind(ctx context.Context, other *Uint8) context.CancelFunc {
 	ctx, cancel := context.WithCancel(ctx)
+	s2 := other.Subscribe()
 	go func(ctx context.Context) {
-		s2 := other.Subscribe()
 		defer s2.Close()
 		for {
 			select {
